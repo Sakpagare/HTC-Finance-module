@@ -1,0 +1,310 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-3">
+  <!-- Mask -->
+
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2">
+      <div class="card card-profile">
+        <img src="/static/assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a href="#" data-toggle="modal" data-target="#exampleModal">
+                {% if logo.profile_image %}
+                  <img src="static/{{logo.profile_image}}" class="rounded-circle" style="height:120px; width:120px;">
+                {% else %}
+                  <img src="static/assets/img/theme/user_icon.png" class="rounded-circle" style="height:120px; width:120px;">
+                {% endif %}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Update Profile Picture <span class="text-danger">*</span></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="form-group mx-auto lg-5">
+                  {{profile_picture_form.profile_image}}
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" name="profile_pic_update">Update Profile</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form> -->
+
+
+
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+
+        </div>
+
+        <div class="card-body pt-4">
+          <div class="text-center">
+            <h5 class="h3">
+              {{ request.user.username }}
+            </h5>
+            <div class="h5 font-weight-300">
+              {{ request.user.email }}
+            </div>
+
+            <div>
+              {{ request.user.first_name}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- editable area -->
+
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card card-body bg-white">
+          <h6 class="heading-small text-muted">Bank Details </h6>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-Beneficiary ">Bank Name <span class="text-danger">*</span> </label>
+                {{bank_form.bank_name}}
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-bank">Branch Name <span class="text-danger">*</span> </label>
+                {{bank_form.branch_name}}
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-bankaccount">Bank Account Number <span class="text-danger">*</span> </label>
+                {{bank_form.bank_acc_no}}
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-re-enteraccnumber">Re-Enter Account Number <span class="text-danger">*</span> </label>
+                {{bank_form.re_enter_account_no}}
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="ifsccode">IFSC Code <span class="text-danger">*</span> </label>
+                {{bank_form.ifsc_code}}
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="ifsccode">Swift Code </label>
+                {{bank_form.swift_code}}
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="ifsccode">AD Code </label>
+                {{bank_form.ad_code}}
+              </div>
+            </div>
+            <!-- <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="ifsccode">Upload Blank Cheque</label>
+                {{bank_form.upload_blank_cheque}}
+              </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary" name="bank_details">Save</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="text-center">
+                  <a href="download_details" class="btn btn-danger"><i class="fas fa-download"></i> Download Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- editable area -->
+    </div>
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Edit Profile</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="" method="post" >
+            {% csrf_token %}
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Username</label>
+                    <input type="text" id="input-username" class="form-control" placeholder="Username"
+                      value="{{ request.user.username }}" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email address</label>
+                    <input type="email" id="input-email" class="form-control" placeholder="{{ request.user.email }}"
+                      disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label " for="input-company-name">Company Name</label>
+                    <input type="text" id="input-company-name" class="form-control"
+                      placeholder="{{ request.user.first_name}}" disabled>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Contact information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-company-name">Contact Number 1 <span class="text-danger">*</span> </label>
+                    {{user_profile.contact_no_1}}
+
+                    {% if msg == "Invalid Contact Number 1" %}
+                    <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-company-name">Contact Number 2 (Optional) </label>
+                    {{user_profile.contact_no_2}}
+                    {% if msg == "Invalid Contact Number 2" %}
+                    <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">Registered Address <span class="text-danger">*</span> </label>
+                    {{user_profile.reg_address}}
+                    {% if msg == "Address should be Greater than 10 Characters" %}
+                    <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City / District <span class="text-danger">*</span> </label>
+                    {{user_profile.city}}
+                    {% if "City Name should be" in msg %}
+                      <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country">PIN Code <span class="text-danger">*</span> </label>
+                    {{user_profile.pincode}}
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small text-muted mb-4">Company Details</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-pan_no">PAN Number <span class="text-danger">*</span> </label>
+                    {{user_profile.pan_no}}
+                    {% if msg == "Invalid PAN Number" %}
+                    <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-gst_no">GST Number <span class="text-danger">*</span> </label>
+                    {{user_profile.gst_no}}
+                    {% if msg == "Invalid GST Number" %}
+                    <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-pan_no">IEC Code</label>
+                    {{user_profile.iec_code}}
+                    {% if msg == "Invalid IEC Number" %}
+                    <span class="text-danger">{{msg}}</span>
+                    {% endif %}
+                  </div>
+                </div>
+
+              </div>
+              <div class="row justify-content-center">
+                <div class="form-group">
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="profile_update">Update Profile</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

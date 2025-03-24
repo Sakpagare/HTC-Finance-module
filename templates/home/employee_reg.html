@@ -1,0 +1,122 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-3">
+    <!-- Mask -->
+
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Add Employee</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <h6 class="heading-small text-muted mb-4">Employee information</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Employee Name <span class="text-danger">*</span></label>
+                                        <input type="text" id="emp_name" name="emp_name" class="form-control"
+                                            placeholder="Full Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Email address <span class="text-danger">*</span></label>
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label " for="input-company-name">Company Name <span class="text-danger">*</span></label>
+                                        <input type="text" id="input-company-name" class="form-control"
+                                            placeholder="{{ request.user.first_name}}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-company-name">Designation <span class="text-danger">*</span></label>
+                                        <select id="designation" name="designation" class="form-control" required>
+                                            <option value="Production Manager">Production Manager</option>
+                                            <option value="Quality Control Inspector">Quality Control Inspector</option>
+                                            <option value="Manufacturing Engineer">Manufacturing Engineer</option>
+                                            <option value="Production Supervisor">Production Supervisor</option>
+                                            <option value="Process Engineer">Process Engineer</option>
+                                            <option value="Operations Manager">Operations Manager</option>
+                                            <option value="Plant Manager">Plant Manager</option>
+                                            <option value="Maintenance Technician">Maintenance Technician</option>
+                                            <option value="Industrial Engineer">Industrial Engineer</option>
+                                            <option value="Materials Manager">Materials Manager</option>
+                                            <option value="Supply Chain Manager">Supply Chain Manager</option>
+                                            <option value="Logistics Coordinator">Logistics Coordinator</option>
+                                            <option value="Continuous Improvement Manager">Continuous Improvement
+                                                Manager</option>
+                                            <option value="Safety Coordinator">Safety Coordinator</option>
+                                            <option value="Production Planner">Production Planner</option>
+                                            <option value="Inventory Manager">Inventory Manager</option>
+                                            <option value="CNC Machinist">CNC Machinist</option>
+                                            <option value="Assembly Line Worker">Assembly Line Worker</option>
+                                            <option value="Welding Technician">Welding Technician</option>
+                                            <option value="Quality Assurance Manager">Quality Assurance Manager</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-joining-date">Joining Date <span class="text-danger">*</span></label>
+                                        <input type="date" id="joining_date" name="joining_date" class="form-control"
+                                             required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-salary">Salary <span class="text-danger">*</span></label>
+                                      <input type="number" id="salary" name="salary" class="form-control" placeholder="Enter salary" min="0" required>
+                                    </div>
+                                  </div>
+                            </div>
+                            <hr class="my-4" />
+                            <!-- Address -->
+
+                            <div class="row justify-content-center">
+                                <div class="form-group">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary" name="profile_update">Add Employee</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

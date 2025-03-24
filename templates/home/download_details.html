@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-argon">
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    #a {
+      background-color: brown;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <table style="width:100%">
+    <tr>
+      <!-- <th colspan="1"> <img src="{{logo_data.profile_image}}" alt="{{logo_data.profile_image}}" height="50px;"> </th> -->
+      <th colspan="7" style="text-align: center;">
+        <h2>{{request.user.first_name}}</h2>
+
+        <p>{{profile_data.reg_address}} <br> {{profile_data.city}} - {{profile_data.pincode}} (Contact number:
+          {{profile_data.contact_no_1}})</p>
+      </th>
+    </tr>
+    <tr id="a" style="text-align: center;">
+      <th colspan="2">PAN Number : {{profile_data.pan_no}}</th>
+      <th colspan="5">GST Number : {{profile_data.gst_no}}</th>
+    </tr>
+    
+    
+    <tr>
+      <td colspan="7">
+        <b>Our Bank Details: </b> <br><br>
+        1) Bank Name: {{ bank_data.bank_name }} <br>
+        2) Branch Name: {{ bank_data.branch_name }} <br>
+        3) Bank Account Number: {{ bank_data.bank_acc_no }}<br>
+        4) IFSC Code: {{ bank_data.ifsc_code }} <br>
+        5) Swift Code: {{ bank_data.swift_code }} <br>
+        6) AD Code: {{ bank_data.ad_code }} <br>
+
+      </td>
+    </tr>
+    
+  </table>
+  <div class="row">
+    <div class="col-lg-12 mt-3 text-center justify-content-center">
+        <a class="btn btn-primary" href="{% url 'profile' %}">Dashboard</a>
+    </div>
+</div>
+</body>
+
+</html>

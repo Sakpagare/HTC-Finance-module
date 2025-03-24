@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-argon">
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    #a {
+      background-color: brown;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <table style="width:100%">
+    <tr>
+      <!-- <th colspan="1"> <img src="{{logo_data.profile_image}}" alt="{{logo_data.profile_image}}" height="50px;"> </th> -->
+      <th colspan="7" style="text-align: center;">
+        <h2>{{request.user.first_name}}</h2>
+
+        <p>{{profile_data.reg_address}} <br> {{profile_data.city}} - {{profile_data.pincode}} (Contact number:
+          {{profile_data.contact_no_1}})</p>
+      </th>
+    </tr>
+    <tr id="a" style="text-align: center;">
+      <th colspan="2">PAN Number : {{profile_data.pan_no}}</th>
+      <th colspan="5">GST Number : {{profile_data.gst_no}}</th>
+    </tr>
+    <tr>
+      <td colspan="7">
+        <div style="text-align: center;">
+          <h3>Proforma Invoice</h3>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">Proforma Invoice No: {{quot_data.PI_number}}<br>
+        Date: {{quot_data.invoice_date}}<br>
+        {{quot_data.customer_name}}<br>
+        {{quot_data.customer_address}}<br>
+        Contact : {{quot_data.customer_contact}}<br>
+        GST Number : {{quot_data.customer_gst}}</td>
+      <td colspan="5">
+        PO Number : {{quot_data.PO_number}} <br>
+        PO Date : {{quot_data.po_date}}
+        Consignee's Name & Address (Ship To):,<br>
+        {{quot_data.customer_reference}}
+      </td>
+    </tr>
+    <tr>
+      <th>Sr No</th>
+      <th>Item Details</th>
+      <th>Grade</th>
+      <th>UOM</th>
+      <th>MOQ</th>
+      <th>Rate (INR)</th>
+      <th>Amount (INR)</th>
+    </tr>
+    {% for entry in material_details %}
+    <tr>
+        <td>{{ entry.sr_no }}</td>
+        <td>{{ entry.item_details }}</td>
+        <td>{{ entry.grade }}</td>
+        <td>{{ entry.uom }}</td>
+        <td>{{ entry.moq }}</td>
+        <td>{{ entry.rate }}</td>
+        <td>{{ entry.amount }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td rowspan="7" colspan="3">Remark:</td>
+    </tr>
+    <tr>
+      <td colspan="3">Basic Amount</td>
+      <td>{{quot_data.totalAmount}} </td>
+    </tr>
+    <tr>
+      <td colspan="3">Packing Forwarding</td>
+      <td>{{quot_data.packingForwarding}}</td>
+    </tr>
+    <tr>
+      <td colspan="3">CGST: {{quot_data.cgst}}%</td>
+      <td>{{quot_data.cgst_total}} </td>
+    </tr>
+    <tr>
+      <td colspan="3">SGST: {{quot_data.sgst}}%</td>
+      <td>{{quot_data.sgst_total}} </td>
+    </tr>
+    <tr>
+      <td colspan="3">IGST: {{quot_data.igst}}%</td>
+      <td>{{quot_data.igst_total}}</td>
+    </tr>
+    <tr>
+      <td colspan="3">Grand Total</td>
+      <td>{{quot_data.grand_total}} </td>
+    </tr>
+    </td>
+    </tr>
+    <tr>
+      <td colspan="7">Amount in Words: {{quot_data.amt_in_words}}</td>
+    </tr>
+    <tr>
+      <td colspan="7">
+        <b>Our Bank Details: </b> <br><br>
+        1) Bank Name: {{ bank_data.bank_name }} <br>
+        2) Branch Name: {{ bank_data.branch_name }} <br>
+        3) Bank Account Number: {{ bank_data.bank_acc_no }}<br>
+        4) IFSC Code: {{ bank_data.ifsc_code }} <br>
+
+      </td>
+    </tr>
+    <tr style="justify-content: right;">
+      <td colspan="7" >
+        For, {{ request.user.first_name }} <br><br><br><br>
+
+        Authorized Signatory<br>
+
+
+      </td>
+    </tr>
+  </table>
+  <div class="row">
+    <div class="col-lg-12 mt-3 text-center justify-content-center">
+        <a class="btn btn-primary" href="{% url 'proforma_table' %}">Dashboard</a>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Attendance</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Attendance</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <form action="{% url 'mark_attendance' %}" method="post">
+                    {% csrf_token %}
+                    <!-- Card header -->
+                    <div class="card-header border-0">
+                        <h3 class="mb-0">Staff Attendance </h3>
+                        <h5 class="mb-0"><span class="status" id="currentDate"></span> <span class="status"
+                                id="currentTime"></span></h5>
+                    </div>
+                    <div class="card-header border-0 col-lg-3">
+                        <h3 class="mb-0">Select Date </h3>
+                        <input class="form-control" type="date" id="att_date" name="att_date" >
+                    </div>
+                    <!-- Light table -->
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="name">Employee Name</th>
+                                    <th scope="col" class="sort" data-sort="status">Email</th>
+                                    <th scope="col" class="sort" data-sort="status">Designation</th>
+                                    <th scope="col" class="sort" data-sort="status">Joining Date</th>
+                                    <th scope="col" class="sort" data-sort="status">Salary</th>
+                                    <th scope="col" class="sort" data-sort="status">Attendance</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                {% for emp in emp_data %}
+                                <tr>
+                                    <th>
+                                        <div class="media-body">
+                                            <span class="name mb-0 text-sm">{{emp.emp_name}}</span>
+                                        </div>
+                                    </th>
+                                    <td class="budget">
+                                        {{emp.email}}
+                                    </td>
+                                    <td class="budget">
+                                        {{emp.designation}}
+                                    </td>
+                                    <td class="budget">
+                                        {{emp.joining_date}}
+                                    </td>
+                                    <td class="budget">
+                                        {{emp.salary}}/per month
+                                    </td>
+                                    <td class="budget">
+                                        <select class="form-control attendance-select" name="attendance[]">
+                                            <option value="Present">Present</option>
+                                            <option value="Absent">Absent</option>
+                                            <option value="Half_Day">Half-Day</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Address -->
+
+                    <div class="row justify-content-center">
+                        <div class="form-group">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" id="markAttendanceBtn"
+                                    name="profile_update">Mark
+                                    Attendance</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to update the current date
+        function updateDate() {
+            var now = new Date();
+            var date = now.toDateString();
+
+            document.getElementById('currentDate').innerText = date;
+        }
+
+        // Function to update the current time
+        function updateTime() {
+            var now = new Date();
+            var time = now.toLocaleTimeString();
+
+            document.getElementById('currentTime').innerText = time;
+        }
+
+        // Update the date and time when the page loads
+        window.onload = function () {
+            updateDate();
+            updateTime();
+
+            // Update the date every second
+            setInterval(updateDate, 1000);
+
+            // Update the time every second
+            setInterval(updateTime, 1000);
+        };
+    </script>
+    <script>
+        // Get the input element
+        var input = document.getElementById('att_date');
+    
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+    
+        // Set the max attribute of the input to today's date
+        input.setAttribute('max', today);
+    </script>
+    
+    {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

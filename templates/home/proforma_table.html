@@ -1,0 +1,193 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Quotation {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-3">
+    <!-- Mask -->
+
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col-xl-12 order-xl-1mx-5 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0"> Proforma Invoice </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-7">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h3 class="mb-0">Proforma Invoices</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <!-- Projects table -->
+                                    <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Quotation Number</th>
+                                                <th scope="col">Customer Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for order in prev_qdr_accpt %}
+                                            <tr>
+                                                <th scope="row">
+                                                    <a href="{% url 'proforma' PI_number=PI_number quotation_number=order.qno %}">{{order.qno}}</a>
+                                                </th>
+                                                <td>
+                                                    {{order.customer_name}}
+                                                </td>
+                                                <td>
+                                                    {{order.q_date}}
+                                                </td>
+                                                <td>
+                                                    {{order.grand_total}}
+                                                </td>
+                                            </tr>
+                                                
+                                            {% endfor %}
+                                                
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h3 class="mb-0">Generated Invoices</h3>
+                                        </div>
+                                        <!-- <div class="col text-right">
+                                            <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <!-- Projects table -->
+                                    <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Invoice Number</th>
+                                                <th scope="col">Customer Name</th>
+                                                <th scope="col">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for order in all_proforma %}
+                                            <tr>
+                                                <th>
+                                                    {{ order.PI_number }}
+                                                </th>
+                                                <td>
+                                                    {{ order.customer_name }}
+                                                </td>
+                                                <td>
+                                                    {{ order.grand_total}}
+                                                </td>
+                                            </tr>
+                                                
+                                            {% endfor %}
+                                                
+                                            {% comment %} <tr>
+                                                <th scope="row">
+                                                    Facebook
+                                                </th>
+                                                <td>
+                                                    1,480
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="mr-2">60%</span>
+                                                        <div>
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-gradient-danger"
+                                                                    role="progressbar" aria-valuenow="60"
+                                                                    aria-valuemin="0" aria-valuemax="100"
+                                                                    style="width: 60%;"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr> {% endcomment %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+</div>
+<script>
+    function addRow() {
+        var table = document.getElementById("myTable");
+        var newRow = table.insertRow(table.rows.length - 1); // Insert the new row above the "Add Row" button row
+
+        var srNoCell = newRow.insertCell(0);
+        srNoCell.innerHTML = '<input type="number" name="srNo[]" min="1">';
+
+        var itemDetailsCell = newRow.insertCell(1);
+        var gradeCell = newRow.insertCell(2);
+        var uomCell = newRow.insertCell(3);
+        var moqCell = newRow.insertCell(4);
+        var rateCell = newRow.insertCell(5);
+        var amountCell = newRow.insertCell(6);
+        var removeCell = newRow.insertCell(7);
+
+        itemDetailsCell.innerHTML = '<input type="text" name="itemDetails[]">';
+        gradeCell.innerHTML = '<input type="text" name="grade[]">';
+        uomCell.innerHTML = '<input type="text" name="uom[]">';
+        moqCell.innerHTML = '<input type="number" name="moq[]">';
+        rateCell.innerHTML = '<input type="number" name="rate[]" oninput="calculateAmount(this)">';
+        amountCell.innerHTML = '<input type="number" name="amount[]" readonly>';
+        removeCell.innerHTML = '<button type="button" onclick="removeRow(this)">Remove</button>';
+    }
+
+    function removeRow(button) {
+        var table = document.getElementById("myTable");
+        var row = button.parentNode.parentNode; // Get the row that contains the clicked button
+        var rowIndex = row.rowIndex;
+
+        // Remove the row from the table
+        table.deleteRow(rowIndex);
+    }
+
+    function calculateAmount(rateInput) {
+        var row = rateInput.parentNode.parentNode;
+        var rate = parseFloat(rateInput.value);
+        var moq = parseFloat(row.cells[4].querySelector('input').value);
+        var amount = rate * moq;
+        row.cells[6].querySelector('input').value = isNaN(amount) ? 0 : amount;
+    }
+</script>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

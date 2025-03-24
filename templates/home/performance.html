@@ -1,0 +1,119 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Performa Invoice {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-3">
+    <!-- Mask -->
+
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+     
+        <div class="col-xl-12 order-xl-1mx-5 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Performa Invoice </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <h6 class="heading-small text-muted mb-4">Customer Details</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Quotation Number</label>
+                                        <input type="text" id="input-username" class="form-control"
+                                            placeholder="Username" value="{{ request.user.username }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Select Date</label>
+                                        <input type="date" id="input-email" class="form-control"
+                                            placeholder="{{ request.user.email }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-company-name">Customer Name</label>
+                                        <input type="text" id="input-company-name" class="form-control"
+                                            placeholder="{{ request.user.firstname}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <label class="form-control-label" for="input-company-name">Address</label>
+                                        <textarea id="input-company-name" class="form-control"
+                                            placeholder="{{ request.user.firstname}}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-company-name">Contact Number</label>
+                                        <input type="number" id="input-company-name" class="form-control"
+                                            placeholder="{{ request.user.firstname}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-company-name">GST Number</label>
+                                        <input type="number" id="input-company-name" class="form-control"
+                                            placeholder="{{ request.user.firstname}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                     
+                    </form>
+               
+
+
+
+
+                <hr class="my-4" />
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-company-name">References</label>
+                                <textarea id="input-company-name" class="form-control"
+                                    placeholder="{{ request.user.firstname}}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+                <hr class="my-4" />
+                <!-- Description -->
+              
+               
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

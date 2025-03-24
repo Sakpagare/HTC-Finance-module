@@ -1,0 +1,201 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Salary Calculations </h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Salary Calculations </a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Salary Calculations </li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Salary Calculations </h3>
+                    <h5 class="mb-0"><span class="status" id="currentDate"></span> <span class="status"
+                            id="currentTime"></span></h5>
+                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="card-header border-0 col-lg-6">
+                        <h3 class="mb-0">Select Month</h3>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <select class="form-control" id="month_select" name="month_select">
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 my-2">
+                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <!-- Light table -->
+
+                {% if emp_attendance_counts %}
+                <div class="card-header border-0 col-lg-12" >
+                    <h3>Salary Sheet of {{ selected_month }}</h3>
+                    <hr class="my-4" />
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush" id="myTable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="name">Employee Name</th>
+                                    <th scope="col" class="sort" data-sort="status">Working Days</th>
+                                    <th scope="col" class="sort" data-sort="status">Present Days</th>
+                                    <th scope="col" class="sort" data-sort="status">Absent Days</th>
+                                    <th scope="col" class="sort" data-sort="status">Half Days</th>
+                                    <th scope="col" class="sort" data-sort="status">Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                {% for emp, counts in emp_attendance_counts.items %}
+                                <tr>
+                                    <th>
+                                        <div class="media-body">
+                                            <span class="name mb-0 text-sm">{{ emp }}</span>
+                                        </div>
+                                    </th>
+                                    <td class="budget">
+                                        24
+                                    </td>
+                                    <td class="budget">
+                                        {{ counts.Present }}
+                                    </td>
+                                    <td class="budget">
+                                        {{ counts.Absent }}
+                                    </td>
+                                    <td class="budget">
+                                        {{ counts.Half_Day }}
+                                    </td>
+                                    <td class="budget">
+                                        {{ counts.Final_Salary }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                <hr class="my-4" />
+                <div class="row justify-content-center">
+                    <div class="form-group">
+                        <div class="text-center">
+                            <button class="btn btn-danger" onclick="saveAsCSV()">Save CSV</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to update the current date
+        function updateDate() {
+            var now = new Date();
+            var date = now.toDateString();
+
+            document.getElementById('currentDate').innerText = date;
+        }
+
+        // Function to update the current time
+        function updateTime() {
+            var now = new Date();
+            var time = now.toLocaleTimeString();
+
+            document.getElementById('currentTime').innerText = time;
+        }
+
+        // Update the date and time when the page loads
+        window.onload = function () {
+            updateDate();
+            updateTime();
+
+            // Update the date every second
+            setInterval(updateDate, 1000);
+
+            // Update the time every second
+            setInterval(updateTime, 1000);
+        };
+    </script>
+    
+
+    {% include "includes/footer.html" %}
+    
+    <script>
+        function saveAsCSV() {
+            const table = document.getElementById('myTable');
+            const rows = table.querySelectorAll('tr');
+            let csvContent = "data:text/csv;charset=utf-8,";
+        
+            // Add headers for the CSV file
+            csvContent += "Employee Name,Working Days,Present Days,Absent Days,Half Days,Salary\r\n";
+        
+            // Iterate over each table row and extract data
+            rows.forEach((row) => {
+                const nameElement = row.querySelector('.name'); // Extract employee name element
+                const name = nameElement ? nameElement.innerText : 'N/A'; // Get employee name or 'N/A' if not found
+                const columns = row.querySelectorAll('td');
+                let rowData = [name]; // Start with employee name
+        
+                // Iterate over each column in the row
+                columns.forEach((column) => {
+                    rowData.push(column.innerText);
+                });
+        
+                // Join the rowData array into a CSV row
+                csvContent += rowData.join(',') + '\r\n';
+            });
+        
+            // Create a data URI for the CSV content
+            const encodedUri = encodeURI(csvContent);
+        
+            // Create a link element and trigger a download
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "salary_sheet.csv");
+            document.body.appendChild(link);
+            link.click();
+        }
+        </script>
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

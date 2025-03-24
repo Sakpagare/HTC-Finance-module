@@ -1,0 +1,97 @@
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <!-- Brand -->
+    <div class="sidenav-header  align-items-center">
+      <a class="navbar-brand" href="/">
+        <img src="/static/assets/img/brand/htc_logo_2.png" class="" alt="HTC Logo" height="100px">
+      </a>
+    </div>
+    <div class="navbar-inner">
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Nav items -->
+        <ul class="navbar-nav">
+          {% comment %} <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="/">
+              <i class="ni ni-tv-2 text-primary"></i>
+              <span class="nav-link-text">Dashboard</span>
+            </a>
+          </li> {% endcomment %}
+          {% comment %} <li class="nav-item">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="/icons.html">
+              <i class="ni ni-planet text-orange"></i>
+              <span class="nav-link-text">Icons</span>
+            </a>
+          </li> {% endcomment %}
+          {% comment %} <li class="nav-item">
+            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="/map.html">
+              <i class="ni ni-pin-3 text-primary"></i>
+              <span class="nav-link-text">Google</span>
+            </a>
+          </li> {% endcomment %}
+          <li class="nav-item">
+            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="{% url 'profile' %}">
+              <i class="ni ni-single-02 text-yellow"></i>
+              <span class="nav-link-text">Profile</span>
+            </a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="/tables.html">
+              <i class="ni ni-bullet-list-67 text-default"></i>
+              <span class="nav-link-text">Tables</span>
+            </a>
+          </li> {% endcomment %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quotation_table' %}">
+              <i class="ni ni-single-copy-04 text-info"></i>
+              <span class="nav-link-text">Quotation</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'proforma_table' %}">
+              <i class="ni ni-single-copy-04 text-navy"></i>
+              <span class="nav-link-text">Proforma Invoice</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'tax_table' %}">
+              <i class="ni ni-single-copy-04 text-pink"></i>
+              <span class="nav-link-text">Tax Invoice</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'employee_reg' %}">
+              <i class="fas fa-users text-red"></i>
+              <span class="nav-link-text">Employee Register</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'attendance' %}">
+              <i class="fas fa-solid fa-user text-red"></i>
+              <span class="nav-link-text">Attendance</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'salary' %}">
+              <i class="ni ni-single-copy-04 text-blue"></i>
+              <span class="nav-link-text">Salary Sheet</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'inventory' %}">
+              <i class="fas fa-boxes text-dark"></i>
+              <span class="nav-link-text">Inventory</span>
+            </a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">
+              <i class="ni ni-user-run text-red"></i>
+              <span class="nav-link-text">Logout</span>
+            </a>
+          </li>             {% endcomment %}
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>

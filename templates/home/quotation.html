@@ -1,0 +1,960 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Quotation {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-3">
+    <!-- Mask -->
+
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col-xl-12 order-xl-1mx-5 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Quotation </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="bg-light text-center text-dark">
+                                    <h6 class="heading-small text-muted mb-4">Company Details</h6>
+                                </div>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="comp_name">Company Name</label>
+                                                <input type="text" id="comp_name" class="form-control"
+                                                    placeholder="Company Name" value="{{ request.user.first_name }}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+
+                                                <label class="form-control-label" for="comp_address">Address</label>
+                                                <input id="comp_address" class="form-control"
+                                                    placeholder="Company Address" value="{{profile_data.reg_address}}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="comp_city">City</label>
+                                                <input type="text" id="comp_city" class="form-control"
+                                                    placeholder="City" value="{{ profile_data.city }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+
+                                                <label class="form-control-label" for="comp_contact">Contact
+                                                    Number</label>
+                                                <input id="comp_contact" class="form-control"
+                                                    placeholder="Contact Number" value="{{profile_data.contact_no_1}}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="comp_gst">GST
+                                                    Number</label>
+                                                <input type="text" id="comp_gst" class="form-control"
+                                                    placeholder="GST Number" value="{{profile_data.gst_no}}"
+                                                    oninput="checkGST()" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="comp_pan">PAN
+                                                    Number</label>
+                                                <input type="text" id="comp_pan" class="form-control"
+                                                    placeholder="PAN Number" value="{{profile_data.pan_no}}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="bg-light text-center">
+                                    <h6 class="heading-small text-muted mb-4">Customer Details</h6>
+                                </div>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="qno">Quotation
+                                                    Number</label>
+                                                <input type="text" id="qno" name="qno" class="form-control"
+                                                    placeholder="Quotation Number" value="{{ quotation_number }}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="q_date">Select
+                                                    Date</label>
+                                                <input type="date" id="q_date" name="q_date" class="form-control"
+                                                    value="{{quotation_instance.q_date}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="customer_name">Customer
+                                                    Name</label>
+                                                <input type="text" id="customer_name" name="customer_name"
+                                                    class="form-control" placeholder="Customer Name"
+                                                    value="{{quotation_instance.customer_name}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+
+                                                <label class="form-control-label" for="customer_address">Address</label>
+                                                <textarea id="customer_address" name="customer_address"
+                                                    class="form-control"
+                                                    placeholder="Company Address">{{ quotation_instance.customer_address }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="customer_contact">Contact
+                                                    Number</label>
+                                                <input type="text" id="customer_contact" name="customer_contact"
+                                                    class="form-control" placeholder="Contact Number"
+                                                    value="{{quotation_instance.customer_contact}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="customer_gst">GST
+                                                    Number</label>
+                                                <input type="text" id="customer_gst" name="customer_gst"
+                                                    class="form-control" placeholder="GST Number" oninput="checkGST()"
+                                                    value="{{quotation_instance.customer_gst}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="customer_reference">References</label>
+                                                <textarea id="customer_reference" name="customer_reference"
+                                                    class="form-control">{{quotation_instance.customer_reference}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <!-- Address -->
+                        <h6 class="heading-small text-muted mb-4">Product Information</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- Description -->
+                                    <table class="form-group" id="myTable">
+                                        <tr>
+                                            <th class="col-1">Sr. No.</th>
+                                            <th class="col-3">Item Details</th>
+                                            <th class="col-2">Grade</th>
+                                            <th class="col-1">UOM</th>
+                                            <th class="col-1">MOQ</th>
+                                            <th class="col-1">Rate</th>
+                                            <th class="col-1">Amount</th>
+                                            <th class="col-1"> </th>
+                                        </tr>
+
+                                        {% if material_details %}
+                                        {% for item_detail in material_details %}
+
+                                        <tr>
+                                            <td><input class="form-control" type="number" name="srNo[]" min="1"
+                                                    value="{{ item_detail.sr_no }}"></td>
+                                            <datalist id="materialNames">
+                                                {% for material_name in material_names %}
+                                                <option value="{{ material_name }}">{{ material_name }}</option>
+                                                {% endfor %}
+                                            </datalist>
+                                            <td><input class="form-control" type="text" name="itemDetails[]" list="materialNames"
+                                                    value="{{ item_detail.item_details }}"></td>
+                                            <td><select class="form-control" name="grade[]">
+                                                    <option value="Grade 1">Grade 1</option>
+                                                    <option value="Grade 2">Grade 2</option>
+                                                    <option value="Grade 3">Grade 3</option>
+                                                </select></td>
+                                            <td><input class="form-control" type="text" name="uom[]"
+                                                    value="{{ item_detail.uom }}"></td>
+                                            <td><input class="form-control" type="number" name="moq[]"
+                                                    value="{{ item_detail.moq }}"></td>
+                                            <td><input class="form-control" type="number" name="rate[]"
+                                                    oninput="calculateAmount(this)" value="{{ item_detail.rate }}"></td>
+                                            <td><input class="form-control" type="number" name="amount[]"
+                                                    value="{{ item_detail.amount }}" readonly></td>
+                                            <td><button class="btn btn-primary" type="button" onclick="addRow()"> <i
+                                                        class="fa fa-plus"></i> </button></td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        {% else %}
+                                        <tr>
+                                            <td><input class="form-control" type="number" name="srNo[]" min="1"
+                                                    value="{{ item_detail.sr_no }}"></td>
+                                            <datalist id="materialNames">
+                                                {% for material_name in material_names %}
+                                                <option value="{{ material_name }}">{{ material_name }}</option>
+                                                {% endfor %}
+                                            </datalist>
+                                            <td><input class="form-control" type="text" name="itemDetails[]"
+                                                    value="{{ item_detail.item_details }}" list="materialNames"></td>
+                                            <td><select class="form-control" name="grade[]">
+                                                    {% if quotation_instance %}
+                                                    <option value="{{ item_detail.grade }}">{{ item_detail.grade }}
+                                                    </option>
+                                                    {% else %}
+                                                    <option value="Grade 1">Grade 1</option>
+                                                    <option value="Grade 2">Grade 2</option>
+                                                    <option value="Grade 3">Grade 3</option>
+                                                    {% endif %}
+                                                </select></td>
+                                            <td><input class="form-control" type="text" name="uom[]"
+                                                    value="{{ item_detail.uom }}"></td>
+                                            <td><input class="form-control" type="number" name="moq[]"
+                                                    value="{{ item_detail.moq }}"></td>
+                                            <td><input class="form-control" type="number" name="rate[]"
+                                                    oninput="calculateAmount(this)" value="{{ item_detail.rate }}"></td>
+                                            <td><input class="form-control" type="number" name="amount[]"
+                                                    value="{{ item_detail.amount }}" readonly></td>
+                                            <td><button class="btn btn-primary" type="button" onclick="addRow()"> <i
+                                                        class="fa fa-plus"></i> </button></td>
+                                        </tr>
+
+                                        {% endif %}
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="remark">Remark</label>
+                                        <textarea id="remark" name="remark" class="form-control"
+                                            placeholder="Remark">{{quotation_instance.remark}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-4">
+                                                <label class="form-control-label" for="basic-amount">Basic
+                                                    Amount: </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" type="number" id="totalAmount"
+                                                    name="totalAmount" onchange="calculateTotalGST()"
+                                                    value="{{quotation_instance.totalAmount}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-4">
+                                                <label class="form-control-label" for="packing_forwarding">Packing
+                                                    Forwarding: </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" type="number" id="packingForwarding"
+                                                    name="packingForwarding" step="0.01"
+                                                    value="{{quotation_instance.packingForwarding}}"
+                                                    oninput="calculateTotalGST()">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-4">
+                                                <label class="form-control-label" for="cgst">CGST: (in %)
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-2" style="padding-right: 1px;">
+                                                <select class="form-control" id="cgst" name="cgst"
+                                                    onchange="syncCgstSgst()" onchange="calculateTotalGST()" disabled>
+
+                                                    {% if quotation_instance %}
+                                                    <option value="{{quotation_instance.cgst}}">
+                                                        {{quotation_instance.cgst}}</option>
+                                                    {% else %}
+                                                    <option value="0">0</option>
+                                                    <option value="0.050">0.050</option>
+                                                    <option value="0.125">0.125</option>
+                                                    <option value="0.500">0.500</option>
+                                                    <option value="0.750">0.750</option>
+                                                    <option value="1.500">1.500</option>
+                                                    <option value="2.500">2.500</option>
+                                                    <option value="3">3</option>
+                                                    <option value="3.750">3.750</option>
+                                                    <option value="6">6</option>
+                                                    <option value="9">9</option>
+                                                    <option value="14">14</option>
+                                                    {% endif %}
+
+
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4" style="padding-left: 1px;">
+                                                <input class="form-control" type="number" id="cgst_total"
+                                                    value="{{quotation_instance.cgst_total}}" name="cgst_total"
+                                                    step="0.01" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-4">
+                                                <label class="form-control-label" for="sgst">SGST (in %):
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-2" style="padding-right: 1px;">
+                                                <select class="form-control" id="sgst" name="sgst"
+                                                    onchange="syncCgstSgst()" onchange="calculateTotalGST()"
+                                                    value="{{quotation_instance.sgst}}" readonly disabled>
+                                                    {% if quotation_instance %}
+                                                    <option value="{{quotation_instance.sgst}}">
+                                                        {{quotation_instance.cgst}}</option>
+                                                    {% else %}
+                                                    <option value="0">0</option>
+                                                    <option value="0.050">0.050</option>
+                                                    <option value="0.125">0.125</option>
+                                                    <option value="0.500">0.500</option>
+                                                    <option value="0.750">0.750</option>
+                                                    <option value="1.500">1.500</option>
+                                                    <option value="2.500">2.500</option>
+                                                    <option value="3">3</option>
+                                                    <option value="3.750">3.750</option>
+                                                    <option value="6">6</option>
+                                                    <option value="9">9</option>
+                                                    <option value="14">14</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4" style="padding-left: 1px;">
+                                                <input class="form-control" type="number" id="sgst_total"
+                                                    name="sgst_total" value="{{quotation_instance.sgst_total}}"
+                                                    step="0.01" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-4">
+                                                <label class="form-control-label" for="igst">IGST:
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-2" style="padding-right: 1px;">
+                                                <select class="form-control" id="igst" name="igst"
+                                                    onchange="calculateTotalGST()" value="{{quotation_instance.igst}}"
+                                                    disabled>
+                                                    {% if quotation_instance %}
+                                                    <option value="{{quotation_instance.sgst}}">
+                                                        {{quotation_instance.igst}}</option>
+                                                    {% else %}
+                                                    <option value="0">0</option>
+                                                    <option value="0.100">0.100</option>
+                                                    <option value="0.250">0.250</option>
+                                                    <option value="1">1</option>
+                                                    <option value="3">3</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7.500">7.500</option>
+                                                    <option value="12">12</option>
+                                                    <option value="18">18</option>
+                                                    <option value="28">28</option>
+                                                    {% endif %}
+
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4" style="padding-left: 1px;">
+                                                <input class="form-control" type="number" id="igst_total"
+                                                    name="igst_total" value="{{quotation_instance.igst_total}}"
+                                                    step="0.01" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-4">
+                                                <label class="form-control-label" for="grand_total">Grand
+                                                    Total: </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" type="number" id="grand_total"
+                                                    name="grand_total" step="0.01"
+                                                    value="{{quotation_instance.grand_total}}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="amt_in_words">Amount in Words
+                                            (INR):</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" id="amt_in_words" name="amt_in_words"
+                                            value="{{quotation_instance.amt_in_words}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+
+                        {% if quotation_instance %}
+                        <h6 class="heading-small text-muted mb-4">Terms and Conditions</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Payment : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="payment_tc"
+                                                    value="{{quotation_instance.payment_tc}}" name="payment_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Delivery Time : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="delivery_time_tc"
+                                                    value="{{quotation_instance.delivery_time_tc}}"
+                                                    name="delivery_time_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">P & F : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="pf_tc"
+                                                    value="{{quotation_instance.pf_tc}}" name="pf_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Price : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="for_tc"
+                                                    value="{{quotation_instance.for_tc}}" name="for_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Quotation Validity : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="q_validity_tc"
+                                                    value="{{quotation_instance.q_validity_tc}}" name="q_validity_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">M.O.Q. : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="moq_tc"
+                                                    value="{{quotation_instance.moq_tc}}" name="moq_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Material : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="material_tc"
+                                                    value="{{quotation_instance.material_tc}}" name="material_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Other : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="other_tc"
+                                                    value="{{quotation_instance.other_tc}}" name="other_tc">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <h6 class="heading-small text-muted mb-4">Terms and Conditions</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Payment : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="payment_tc"
+                                                    name="payment_tc"
+                                                    value="50% Advance along with Purchase Order, Balance against the proforma Invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Delivery Time : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="delivery_time_tc"
+                                                    name="delivery_time_tc"
+                                                    value="5-6 Weeks after received your advance payment">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">P & F : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="pf_tc" name="pf_tc"
+                                                    value="At Actual">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Price : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="for_tc" name="for_tc"
+                                                    value="Ex-Works">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Quotation Validity : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="q_validity_tc"
+                                                    name="q_validity_tc" value="15 Days">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">M.O.Q. : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="moq_tc" name="moq_tc"
+                                                    value="+/- 0.05">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Material : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="material_tc"
+                                                    name="material_tc" value="(Full Finished as per supplied drawing)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2">
+                                                <label class="form-control-label">Other : </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" id="other_tc" name="other_tc"
+                                                    value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        <hr class="my-4" />
+                        <h6 class="heading-small text-muted mb-4">Our Bank Details</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-3">
+                                                <label class="form-control-label">Bank Name : </label>
+                                                <input class="form-control" type="text" id="bank_name" name="bank_name"
+                                                    value="{{bank_data.bank_name}}" readonly>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label class="form-control-label">Branch Name : </label>
+                                                <input class="form-control" type="text" id="branch_name"
+                                                    name="branch_name" value="{{bank_data.branch_name}}" readonly>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label class="form-control-label">Account Number : </label>
+                                                <input class="form-control" type="text" id="bank_acc_no"
+                                                    name="bank_acc_no" value="{{bank_data.bank_acc_no}}" readonly>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label class="form-control-label">IFSC Code : </label>
+                                                <input class="form-control" type="text" id="ifsc_code" name="ifsc_code"
+                                                    value="{{bank_data.ifsc_code}}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12 text-center justify-content-center">
+                                    <button class="btn btn-primary" type="submit" name="save">Print</button>
+                                    <button class="btn btn-dark" type="submit" name="order_accept">Convert to Order
+                                        Acceptance</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "includes/footer.html" %}
+
+</div>
+<script>
+
+    function addRow() {
+        var table = document.getElementById("myTable");
+        var newRow = table.insertRow(table.rows.length - 1); // Insert the new row below the "Add Row" button row
+
+        var srNoCell = newRow.insertCell(0);
+        srNoCell.innerHTML = '<input class="form-control" type="number" name="srNo[]" min="1">';
+
+        var itemDetailsCell = newRow.insertCell(1);
+        var gradeCell = newRow.insertCell(2);
+        var uomCell = newRow.insertCell(3);
+        var moqCell = newRow.insertCell(4);
+        var rateCell = newRow.insertCell(5);
+        var amountCell = newRow.insertCell(6);
+        var removeCell = newRow.insertCell(7);
+
+        itemDetailsCell.innerHTML = `<datalist id="materialNames">
+                                                {% for material_name in material_names %}
+                                                <option value="{{ material_name }}">{{ material_name }}</option>
+                                                {% endfor %}
+                                            </datalist>
+                        <input class="form-control" type="text" name="itemDetails[]" list="materialNames">`;
+        gradeCell.innerHTML = `
+                <select class="form-control" name="grade[]">
+                    <option value="Grade 1">Grade 1</option>
+                    <option value="Grade 2">Grade 2</option>
+                    <option value="Grade 3">Grade 3</option>
+                </select>
+            `;
+        uomCell.innerHTML = '<input class="form-control" type="text" name="uom[]">';
+        moqCell.innerHTML = '<input class="form-control" type="number" name="moq[]">';
+        rateCell.innerHTML = '<input class="form-control" type="number" name="rate[]" oninput="calculateAmount(this)">';
+        amountCell.innerHTML = '<input class="form-control" type="number" name="amount[]" readonly>';
+        removeCell.innerHTML = '<button class="btn btn-danger" type="button" onclick="removeRow(this)"><i class="fa fa-trash"></i></button>';
+
+    }
+
+    function removeRow(button) {
+        var table = document.getElementById("myTable");
+        var row = button.parentNode.parentNode; // Get the row that contains the clicked button
+        var rowIndex = row.rowIndex;
+
+        // Remove the row from the table
+        table.deleteRow(rowIndex);
+        calculateTotalAmount();
+        calculateTotalGST();
+        calculateGrandTotal();
+    }
+
+    function calculateTotalAmount() {
+        var table = document.getElementById("myTable");
+        var amountInputs = table.querySelectorAll("input[name='amount[]']");
+        var totalAmountInput = document.getElementById("totalAmount");
+        var total = 0;
+
+        // Calculate the sum of all amount values
+        for (var i = 0; i < amountInputs.length; i++) {
+            var amount = parseFloat(amountInputs[i].value);
+            total += isNaN(amount) ? 0 : amount;
+        }
+
+        // Display the total amount in the input field
+        totalAmountInput.value = total;
+    }
+
+    // Function to calculate the amount for each row based on rate and MOQ
+    function calculateAmount(rateInput) {
+        var row = rateInput.parentNode.parentNode;
+        var rate = parseFloat(rateInput.value);
+        var moq = parseFloat(row.cells[4].querySelector('input').value);
+        var amount = rate * moq;
+        row.cells[6].querySelector('input').value = isNaN(amount) ? 0 : amount;
+
+        // Recalculate the total amount whenever a row's amount is updated
+        calculateTotalAmount();
+        calculateTotalGST();
+        calculateGrandTotal();
+    }
+
+
+    function checkGST() {
+        var compGST = document.getElementById("comp_gst").value;
+        var customerGST = document.getElementById("customer_gst").value;
+        var cgstSelect = document.getElementById("cgst");
+        var sgstSelect = document.getElementById("sgst");
+        var igstSelect = document.getElementById("igst");
+
+        if (compGST.slice(0, 2) === customerGST.slice(0, 2)) {
+            // If the first two letters are the same, enable CGST and SGST selects, disable IGST select
+            cgstSelect.disabled = false;
+            sgstSelect.disabled = false;
+            igstSelect.disabled = true;
+            igstSelect.value = "0"; // Set the value of IGST to "0"
+
+        } else {
+            // If the first two letters are different, enable IGST select, disable CGST and SGST selects
+            cgstSelect.disabled = true;
+            sgstSelect.disabled = true;
+            igstSelect.disabled = false;
+            cgstSelect.value = "0"; // Set the value of CGST to "0"
+            sgstSelect.value = "0"; // Set the value of SGST to "0"
+        }
+
+        // Recalculate CGST, SGST, and IGST based on the updated total amount and GST selection
+        calculateGSTs();
+        calculateTotalGST();
+        calculateGrandTotal();
+    }
+
+    function syncCgstSgst() {
+        var cgstSelect = document.getElementById("cgst");
+        var sgstSelect = document.getElementById("sgst");
+
+        sgstSelect.value = cgstSelect.value;
+
+        // Recalculate CGST, SGST, and IGST based on the updated total amount and GST selection
+        calculateGSTs();
+        calculateTotalGST();
+        calculateGrandTotal();
+    }
+
+    function calculateTotalGST() {
+        var totalAmount = parseFloat(document.getElementById("totalAmount").value);
+        var packageForwarding = parseFloat(document.getElementById("packingForwarding").value);
+        var cgstPercentage = parseFloat(document.getElementById("cgst").value);
+        var sgstPercentage = parseFloat(document.getElementById("sgst").value);
+        var igstPercentage = parseFloat(document.getElementById("igst").value);
+
+        var cgstAmount = (totalAmount + packageForwarding) * cgstPercentage / 100;
+        var sgstAmount = (totalAmount + packageForwarding) * sgstPercentage / 100;
+        var igstAmount = (totalAmount + packageForwarding) * igstPercentage / 100;
+
+        document.getElementById("cgst_total").value = cgstAmount.toFixed(2);
+        document.getElementById("sgst_total").value = sgstAmount.toFixed(2);
+        document.getElementById("igst_total").value = igstAmount.toFixed(2);
+
+        calculateGrandTotal();
+    }
+
+    // Function to calculate the Grand Total
+    function calculateGrandTotal() {
+        var totalAmount = parseFloat(document.getElementById("totalAmount").value);
+        var packageForwarding = parseFloat(document.getElementById("packingForwarding").value);
+        var cgstTotal = parseFloat(document.getElementById("cgst_total").value);
+        var sgstTotal = parseFloat(document.getElementById("sgst_total").value);
+        var igstTotal = parseFloat(document.getElementById("igst_total").value);
+
+        var grandTotal = totalAmount + packageForwarding + cgstTotal + sgstTotal + igstTotal;
+
+        document.getElementById("grand_total").value = Math.round(grandTotal);
+        document.getElementById("amt_in_words").value = convertNumberToWords(Math.round(grandTotal));
+    }
+
+    function convertNumberToWords(n) {
+        if (n < 0)
+            return false;
+        var single_digit = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+        var double_digit = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+        var below_hundred = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+        var thousands = ['', 'Thousand', 'Lakh', 'Crore'];
+
+        if (n === 0) return 'Zero';
+
+        function translate(n, index) {
+            var word = "";
+            if (n < 10) {
+                word = single_digit[n] + ' ';
+            } else if (n < 20) {
+                word = double_digit[n - 10] + ' ';
+            } else if (n < 100) {
+                var rem = translate(n % 10, 0);
+                word = below_hundred[Math.floor(n / 10)] + ' ' + rem;
+            } else if (n < 1000) {
+                var rem = translate(n % 100, 0);
+                word = single_digit[Math.floor(n / 100)] + ' Hundred ' + rem;
+            } else if (n < 10000) {
+                var rem = translate(n % 1000, 0);
+                word = single_digit[Math.floor(n / 1000)] + ' Thousand ' + rem;
+            } else if (n < 100000) {
+                var rem = translate(n % 1000, 1);
+                word = translate(Math.floor(n / 1000), 1) + ' Thousand ' + rem;
+            } else if (n < 1000000) {
+                var rem = translate(n % 100000, 2);
+                word = single_digit[Math.floor(n / 100000)] + ' Lakh ' + rem;
+            } else if (n < 10000000) {
+                var rem = translate(n % 1000000, 2);
+                word = translate(Math.floor(n / 1000000), 2) + ' Lakh ' + rem;
+            } else if (n < 100000000) {
+                var rem = translate(n % 10000000, 3);
+                word = single_digit[Math.floor(n / 10000000)] + ' Crore ' + rem;
+            } else if (n < 1000000000) {
+                var rem = translate(n % 100000000, 3);
+                word = translate(Math.floor(n / 100000000), 3) + ' Crore ' + rem;
+            }
+            return word;
+        }
+        var result = translate(n, 0);
+        return result.trim();
+    }
+
+
+
+    // Attach event listeners to amount[] inputs to recalculate the total on change
+    var table = document.getElementById("myTable");
+    var amountInputs = table.querySelectorAll("input[name='amount[]']");
+    for (var i = 0; i < amountInputs.length; i++) {
+        amountInputs[i].addEventListener("input", calculateAmount);
+    }
+
+    // Attach event listeners to CGST, SGST, and IGST select fields to update the total amounts
+    document.getElementById("cgst").addEventListener("change", calculateTotalGST);
+    document.getElementById("sgst").addEventListener("change", calculateTotalGST);
+    document.getElementById("igst").addEventListener("change", calculateTotalGST);
+
+
+</script>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,140 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Inventory {% endblock title %}
+
+{% block content %}
+
+<div class="header pb-6 d-flex align-items-center mb-3">
+    <!-- Mask -->
+
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Inventory</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="card-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <h6 class="heading-small text-muted mb-4">Add Material</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-username">Name of Material
+                                                    <span class="text-danger">*</span></label>
+                                                <input type="text" id="material_name" name="material_name" class="form-control"
+                                                    placeholder="Material Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Amount <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" id="amount" name="amount" class="form-control"
+                                                    placeholder="Amount" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Min Value <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" id="min_value" name="min_value" class="form-control"
+                                                    placeholder="Minimum Quantity required" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Max Value <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" id="max_value" name="max_value" class="form-control"
+                                                    placeholder="Maximum Quantity Required" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4" />
+                                    <!-- Address -->
+
+                                    <div class="row justify-content-center">
+                                        <div class="form-group">
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary" name="profile_update">Add
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="mb-0">Materials</h3>
+                                    </div>
+                                    <!-- <div class="col text-right">
+                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <!-- Projects table -->
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Material Name</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Min Value</th>
+                                            <th scope="col">Max Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for material in materials %}
+                                        <tr>
+                                            <th>
+                                                {{ material.material_name}}
+                                            </th>
+                                            <td>
+                                                {{ material.amount}}
+                                            </td>
+                                            <td>
+                                                {{ material.min_value}}
+                                            </td>
+                                            <td>
+                                                {{ material.max_value}}
+                                            </td>
+                                        </tr>
+                                            
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
